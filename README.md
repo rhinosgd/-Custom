@@ -81,6 +81,22 @@ cms/
 └─ data/site.db          # SQLite 数据库（自动生成）
 ```
 
+## 换设备部署（GitHub 拉取后）
+
+仓库已用 `.gitignore` 排除 `node_modules/` 和运行时生成的 `data/`（SQLite 库会在首次启动时自动重建），所以克隆后需两步即可跑起来：
+
+```bash
+# 1) 安装依赖（express + ejs）
+npm install
+
+# 2) 启动（首次会自动建库 + 写入示例数据）
+npm start            # 默认端口 4000
+```
+
+- 前台 http://localhost:4000/ ｜ 后台 http://localhost:4000/admin （admin / admin123）
+- 已提交 `public/assets/media/` 下全部素材（AI 存量图 + Pexels 备份），换设备无需重新下载图。
+- 若目标设备 Node < 22，`node:sqlite` 不可用：请升级到 Node 22+，或把 `src/db/index.js` 改为 `better-sqlite3` 适配层。
+
 ## 上线切换 MySQL（可选）
 
 当前用 SQLite（本地零配置）。上线时安装 `mysql2`，把 `src/db/index.js` 的连接换成 MySQL，
