@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= title %> · WhimsiPaw 后台</title>
+<style>
+  :root{--p:#E85D9E;--p2:#D14B8D;--ink:#201A33;--line:#ececf1;--mut:#8b8b9a;}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,'PingFang SC',sans-serif;background:#f6f6fb;color:var(--ink)}
+  a{color:inherit;text-decoration:none}
+  .wrap{display:flex;min-height:100vh}
+  .side{width:230px;background:var(--ink);color:#fff;padding:1.4rem 1rem;position:fixed;height:100vh;overflow:auto}
+  .side .brand{font-weight:800;font-size:1.15rem;margin-bottom:1.4rem;display:flex;gap:.5rem;align-items:center}
+  .side .brand .m{width:28px;height:28px;border-radius:8px;background:var(--p);display:grid;place-items:center}
+  .side a.nav{display:block;padding:.7rem .85rem;border-radius:10px;color:#cfcfe0;font-size:.92rem;margin-bottom:.25rem}
+  .side a.nav:hover,.side a.nav.active{background:rgba(255,255,255,.1);color:#fff}
+  .side .bot{margin-top:1.5rem;font-size:.8rem;color:#9a9ab0}
+  .main{margin-left:230px;flex:1;padding:1.6rem 2rem}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+  .topbar h1{font-size:1.4rem;margin:0}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.3rem;margin-bottom:1.2rem}
+  .grid{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.3rem}
+  .stat b{font-size:1.8rem;display:block}.stat span{color:var(--mut);font-size:.9rem}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden}
+  th,td{padding:.8rem 1rem;text-align:left;border-bottom:1px solid var(--line);font-size:.9rem}
+  th{background:#faf9fe;color:var(--mut);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.1rem;border-radius:10px;font-weight:600;font-size:.9rem;border:1px solid var(--line);background:#fff;cursor:pointer}
+  .btn.p{background:var(--p);color:#fff;border-color:var(--p)} .btn.p:hover{background:var(--p2)}
+  .btn.s{background:#f1f1f6} .btn.d{color:#d33;border-color:#f0caca}
+  .btn.sm{padding:.35rem .7rem;font-size:.82rem}
+  label{display:block;font-weight:600;font-size:.85rem;margin:1rem 0 .35rem}
+  input,select,textarea{width:100%;padding:.6rem .8rem;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff}
+  textarea{min-height:110px;resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .pill{display:inline-block;padding:.15rem .6rem;border-radius:50rem;font-size:.72rem;font-weight:700;background:#eee}
+  .pill.s{background:#e7f8ef;color:#0a9}
+  .pill.new{background:#fdeaf3;color:var(--p2)}
+  .pill.sale{background:#fff1e8;color:#e07b2a}
+  .thumb{width:64px;height:64px;object-fit:cover;border-radius:8px}
+  .login{display:grid;place-items:center;min-height:100vh;background:linear-gradient(150deg,#F9C7F4,#BCFFF3)}
+  .login .box{background:#fff;border-radius:18px;padding:2.2rem;width:min(360px,92vw);box-shadow:0 20px 60px rgba(0,0,0,.12)}
+  .login h1{margin:0 0 .3rem;font-size:1.4rem}.login p{color:var(--mut);margin:0 0 1.2rem}
+  .err{color:#d33;background:#fdecec;padding:.6rem .8rem;border-radius:8px;margin-bottom:1rem;font-size:.9rem}
+  .muted{color:var(--mut);font-size:.85rem}
+  .sec-preview{background:#faf9fe;border:1px solid var(--line);border-radius:10px;padding:.8rem;white-space:pre-wrap;font-size:.78rem;max-height:240px;overflow:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside class="side">
+    <div class="brand"><span class="m">🐾</span>WhimsiPaw</div>
+    <a class="nav" href="/admin">仪表盘</a>
+    <a class="nav" href="/admin/products">商品</a>
+    <a class="nav" href="/admin/categories">分类</a>
+    <a class="nav" href="/admin/pages">页面 / 博客</a>
+    <a class="nav" href="/admin/sections">首页区块</a>
+    <a class="nav" href="/admin/media">媒体库</a>
+    <a class="nav" href="/admin/inquiries">询价 / 留资</a>
+    <a class="nav" href="/admin/settings">站点设置</a>
+    <div class="bot">
+      管理员：<%= admin %><br>
+      <a class="nav" href="/admin/logout" style="margin-top:.6rem">退出登录</a>
+      <a class="nav" href="/" target="_blank" style="margin-top:.3rem">↗ 查看前台</a>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="topbar"><h1><%= title %></h1><div><a class="btn s sm" href="/" target="_blank">前台预览</a></div></div>

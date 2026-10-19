@@ -1,0 +1,22 @@
+<%- include('partials/chrome-start', { title: p ? '编辑页面' : '新建页面', admin: admin }) %>
+<form method="post" action="<%= p ? '/admin/pages/'+p.id : '/admin/pages/new' %>">
+  <div class="card">
+    <div class="row">
+      <div><label>标题 *</label><input name="title" value="<%= p?p.title:'' %>" required></div>
+      <div><label>Slug *</label><input name="slug" value="<%= p?p.slug:'' %>" required></div>
+    </div>
+    <div class="row">
+      <div><label>类型</label>
+        <select name="type"><option value="static" <%= !p||p.type=='static'?'selected':'' %>>static</option><option value="about" <%= p&&p.type=='about'?'selected':'' %>>about</option><option value="blog" <%= p&&p.type=='blog'?'selected':'' %>>blog</option></select>
+      </div>
+      <div><label>状态</label>
+        <select name="status"><option value="published" <%= !p||p.status=='published'?'selected':'' %>>published</option><option value="draft" <%= p&&p.status=='draft'?'selected':'' %>>draft</option></select>
+      </div>
+    </div>
+    <label>摘要</label><input name="excerpt" value="<%= p?p.excerpt:'' %>">
+    <label>封面图 URL</label><input name="cover" value="<%= p?p.cover:'' %>">
+    <label>正文（支持 HTML）</label><textarea name="body" style="min-height:200px"><%= p?p.body:'' %></textarea>
+  </div>
+  <div style="display:flex;gap:.6rem"><button class="btn p" type="submit">保存</button><a class="btn s" href="/admin/pages">取消</a></div>
+</form>
+<%- include('partials/chrome-end') %>

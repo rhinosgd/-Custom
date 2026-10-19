@@ -1,0 +1,42 @@
+<%- include('partials/chrome-start', { title: p ? '编辑商品' : '新建商品', admin: admin }) %>
+<form method="post" action="<%= p ? '/admin/products/'+p.id : '/admin/products/new' %>">
+  <div class="card">
+    <div class="row">
+      <div><label>商品名称 *</label><input name="name" value="<%= p?p.name:'' %>" required></div>
+      <div><label>Slug（URL 标识，唯一）</label><input name="slug" value="<%= p?p.slug:'' %>" required></div>
+    </div>
+    <div class="row">
+      <div><label>分类</label>
+        <select name="category_id">
+          <option value="">— 无 —</option>
+          <% categories.forEach(function(c){ %><option value="<%= c.id %>" <%= p&&p.category_id==c.id?'selected':'' %>><%= c.name %></option><% }); %>
+        </select>
+      </div>
+      <div><label>副标题 / 卖点</label><input name="subtitle" value="<%= p?p.subtitle:'' %>"></div>
+    </div>
+    <div class="row">
+      <div><label>价格 (USD)</label><input name="price" type="number" step="0.01" value="<%= p?p.price:'' %>" required></div>
+      <div><label>原价（划线价，可空）</label><input name="compare_at_price" type="number" step="0.01" value="<%= p?p.compare_at_price:'' %>"></div>
+    </div>
+    <div class="row">
+      <div><label>徽章</label>
+        <select name="badge"><option value="">无</option><option value="new" <%= p&&p.badge=='new'?'selected':'' %>>new</option><option value="sale" <%= p&&p.badge=='sale'?'selected':'' %>>sale</option></select>
+      </div>
+      <div><label>状态</label>
+        <select name="status"><option value="active" <%= !p||p.status=='active'?'selected':'' %>>active</option><option value="draft" <%= p&&p.status=='draft'?'selected':'' %>>draft</option></select>
+      </div>
+    </div>
+    <label>描述</label><textarea name="description"><%= p?p.description:'' %></textarea>
+    <label>图片（每行一个 URL 或本地路径，如 /assets/media/p_kimono.jpg）</label>
+    <textarea name="images" placeholder="/assets/media/p_kimono.jpg"><%= p?p.images:'' %></textarea>
+    <label>规格选项（JSON，如 [{"name":"Size","values":["S","M","L"]}]）</label>
+    <textarea name="options" style="font-family:monospace;font-size:.82rem"><%= p?p.options:'[]' %></textarea>
+    <label>定制说明（可空，如量体提示）</label><input name="custom_note" value="<%= p?p.custom_note:'' %>">
+    <label style="display:flex;align-items:center;gap:.5rem;margin-top:1rem"><input type="checkbox" name="featured" value="1" <%= p&&p.featured?'checked':'' %> style="width:auto"> 设为首页精选</label>
+  </div>
+  <div style="display:flex;gap:.6rem">
+    <button class="btn p" type="submit">保存</button>
+    <a class="btn s" href="/admin/products">取消</a>
+  </div>
+</form>
+<%- include('partials/chrome-end') %>

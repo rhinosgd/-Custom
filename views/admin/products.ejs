@@ -1,0 +1,23 @@
+<%- include('partials/chrome-start', { title: '商品管理', admin: admin }) %>
+<div style="margin-bottom:1rem"><a class="btn p" href="/admin/products/new">+ 新建商品</a></div>
+<div class="card" style="padding:0;overflow:auto">
+<table>
+  <thead><tr><th>缩略图</th><th>名称</th><th>分类</th><th>价格</th><th>状态</th><th>操作</th></tr></thead>
+  <tbody>
+  <% products.forEach(function(p){ var imgs = JSON.parse(p.images||'[]'); %>
+    <tr>
+      <td><img class="thumb" src="<%= (imgs[0]||'') %>" alt=""></td>
+      <td><b><%= p.name %></b><br><span class="muted"><%= p.slug %></span></td>
+      <td><%= p.cat_name || '—' %></td>
+      <td>$<%= (p.price||0).toFixed(2) %><% if(p.compare_at_price){ %> <s class="muted">$<%= (p.compare_at_price||0).toFixed(2) %></s><% } %></td>
+      <td><span class="pill <%= p.status %>"><%= p.status %></span> <% if(p.badge){ %><span class="pill <%= p.badge %>"><%= p.badge %></span><% } %></td>
+      <td style="white-space:nowrap">
+        <a class="btn sm" href="/admin/products/<%= p.id %>/edit">编辑</a>
+        <form method="post" action="/admin/products/<%= p.id %>/delete" style="display:inline" onsubmit="return confirm('确认删除？')"><button class="btn sm d" type="submit">删</button></form>
+      </td>
+    </tr>
+  <% }); %>
+  </tbody>
+</table>
+</div>
+<%- include('partials/chrome-end') %>

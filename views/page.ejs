@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= page.title %> · <%= settings.site_name %></title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23E85D9E'/><text x='50' y='68' font-size='52' text-anchor='middle'>🐾</text></svg>">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+<%- include('partials/header', { settings: settings, categories: categories }) %>
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow"><%= page.type %></span>
+      <h1><%= page.title %></h1>
+      <% if (page.excerpt) { %><p><%= page.excerpt %></p><% } %>
+    </div>
+  </section>
+  <div class="container" style="padding-bottom:clamp(3rem,7vw,5rem)">
+    <% if (page.cover) { %><img src="<%= page.cover %>" alt="" style="width:100%;border-radius:var(--radius-2xl);margin:1.5rem 0"><% } %>
+    <div class="feature-split" style="grid-template-columns:1fr"><div class="lead" style="max-width:760px"><%- page.body %></div></div>
+  </div>
+</main>
+<%- include('partials/footer', { settings: settings, categories: categories }) %>
+</body>
+</html>

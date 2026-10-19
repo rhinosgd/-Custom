@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录 · WhimsiPaw 后台</title>
+<style>
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,'PingFang SC',sans-serif}
+  .login{display:grid;place-items:center;min-height:100vh;background:linear-gradient(150deg,#F9C7F4,#BCFFF3)}
+  .box{background:#fff;border-radius:18px;padding:2.2rem;width:min(360px,92vw);box-shadow:0 20px 60px rgba(0,0,0,.12)}
+  .box h1{margin:0 0 .3rem;font-size:1.4rem}.box p{color:#8b8b9a;margin:0 0 1.2rem}
+  label{display:block;font-weight:600;font-size:.85rem;margin:.8rem 0 .35rem}
+  input{width:100%;padding:.65rem .85rem;border:1px solid #ececf1;border-radius:10px;font:inherit}
+  .btn{width:100%;margin-top:1.3rem;padding:.75rem;border:0;border-radius:10px;background:#E85D9E;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer}
+  .err{color:#d33;background:#fdecec;padding:.6rem .8rem;border-radius:8px;margin-bottom:1rem;font-size:.9rem}
+  .hint{margin-top:1rem;font-size:.8rem;color:#8b8b9a;text-align:center}
+</style>
+</head>
+<body>
+<div class="login">
+  <form class="box" method="post" action="/admin/login">
+    <h1>🐾 WhimsiPaw 后台</h1>
+    <p>请输入管理员账号登录</p>
+    <% if (err) { %><div class="err"><%= err %></div><% } %>
+    <label>用户名</label>
+    <input name="username" value="admin" required>
+    <label>密码</label>
+    <input name="password" type="password" value="admin123" required>
+    <button class="btn" type="submit">登录</button>
+    <div class="hint">默认账号 admin / admin123（请尽快修改）</div>
+  </form>
+</div>
+</body>
+</html>

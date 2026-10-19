@@ -1,0 +1,16 @@
+<%- include('partials/chrome-start', { title: '首页区块', admin: admin }) %>
+<p class="muted">首页由以下区块按顺序组成。点击编辑可修改文案与内容（JSON）。区块类型：hero（视频大卡）、product_grid（商品矩阵）、creators（宠物家族）、pain_points（卖点手风琴）、milestones（里程碑）、reviews（评论）、blog（博客）。</p>
+<div class="card" style="padding:0;overflow:auto">
+<table>
+  <thead><tr><th>#</th><th>区块</th><th>类型</th><th>标题</th><th>状态</th><th>操作</th></tr></thead>
+  <tbody>
+  <% sections.forEach(function(s,i){ %>
+    <tr>
+      <td><%= i+1 %></td><td class="muted"><%= s.section_key %></td><td><span class="pill"><%= s.type %></span></td><td><b><%= s.title %></b></td><td><span class="pill <%= s.status %>"><%= s.status %></span></td>
+      <td><a class="btn sm" href="/admin/sections/<%= s.section_key %>/edit">编辑</a></td>
+    </tr>
+  <% }); %>
+  </tbody>
+</table>
+</div>
+<%- include('partials/chrome-end') %>

@@ -1,0 +1,20 @@
+<%- include('partials/chrome-start', { title: '仪表盘', admin: admin }) %>
+<div class="grid">
+  <div class="stat"><b><%= counts.products %></b><span>在售商品</span></div>
+  <div class="stat"><b><%= counts.categories %></b><span>分类</span></div>
+  <div class="stat"><b><%= counts.pages %></b><span>页面 / 博客</span></div>
+  <div class="stat"><b><%= counts.inquiries %></b><span>待处理询价</span></div>
+  <div class="stat"><b><%= counts.media %></b><span>媒体文件</span></div>
+</div>
+<div class="card">
+  <h2 style="margin-top:0;font-size:1.1rem">欢迎回来，<%= admin %> 👋</h2>
+  <p class="muted">这是 WhimsiPaw 的自定义轻量后台。左侧可管理商品、分类、页面、首页区块、媒体、询价与站点设置——全部改动即时反映在前台。</p>
+  <p class="muted">提示：当前为本地数据库（SQLite）。上线时把 <code>data/site.db</code> 换到 MySQL 并改动连接即可（架构与 WordPress 一致）。</p>
+  <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+    <a class="btn p" href="/admin/products">管理商品</a>
+    <a class="btn s" href="/admin/sections">编辑首页</a>
+    <a class="btn s" href="/admin/settings">站点设置</a>
+    <a class="btn s" href="/" target="_blank">查看前台</a>
+  </div>
+</div>
+<%- include('partials/chrome-end') %>

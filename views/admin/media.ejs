@@ -1,0 +1,43 @@
+<%- include('partials/chrome-start', { title: '媒体库', admin: admin }) %>
+<div class="card">
+  <h3 style="margin-top:0">添加远程图片 / 视频（免费图库 URL）</h3>
+  <form method="post" action="/admin/media/add" class="row" style="align-items:end">
+    <div><label>类型</label><select name="type"><option value="image">image</option><option value="video">video</option></select></div>
+    <div><label>URL（直链）</label><input name="url" placeholder="https://..." required></div>
+    <div><label>说明 / alt</label><input name="alt"></div>
+    <div><label>&nbsp;</label><button class="btn p" type="submit">添加</button></div>
+  </form>
+</div>
+<div class="card">
+  <h3 style="margin-top:0">上传本地文件</h3>
+  <input type="file" id="upFile" accept="image/*,video/*">
+  <button class="btn s" id="upBtn" style="margin-top:.6rem">上传</button>
+  <p class="muted" id="upMsg"></p>
+</div>
+<div class="card">
+  <h3 style="margin-top:0">媒体库（数据库记录 <span class="pill"><%= media.length %></span> · 本地文件 <span class="pill"><%= files.length %></span>）</h3>
+  <div style="display:flex;gap:.8rem;flex-wrap:wrap">
+    <% media.forEach(function(m){ %>
+      <div style="width:120px;text-align:center">
+        <% if(m.type==='video'){ %><video src="<%= m.url %>" style="width:120px;height:90px;object-fit:cover;border-radius:8px" muted></video>
+        <% } else { %><img src="<%= m.url %>" style="width:120px;height:90px;object-fit:cover;border-radius:8px"><% } %>
+        <div class="muted" style="font-size:.7rem;word-break:break-all;margin-top:.3rem"><%= m.alt||m.url %></div>
+      </div>
+    <% }); %>
+  </div>
+  <p class="muted" style="margin-top:1rem">本地目录文件（含未入库）：</p>
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+    <% files.forEach(function(f){ %><code style="background:#f1f1f6;padding:.2rem .5rem;border-radius:6px;font-size:.75rem">/assets/media/<%= f %></code><% }); %>
+  </div>
+</div>
+<script>
+document.getElementById('upBtn').addEventListener('click', async () => {
+  const f = document.getElementById('upFile').files[0]; if(!f){return;}
+  const msg = document.getElementById('upMsg'); msg.textContent='上传中…';
+  const buf = await f.arrayBuffer();
+  const r = await fetch('/admin/media/upload?name='+encodeURIComponent(f.name), {method:'POST', body: buf});
+  const j = await r.json();
+  msg.textContent = j.ok ? '已上传：'+j.url : '上传失败'; if(j.ok) setTimeout(()=>location.reload(), 600);
+});
+</script>
+<%- include('partials/chrome-end') %>

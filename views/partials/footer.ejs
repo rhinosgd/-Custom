@@ -1,0 +1,60 @@
+<footer class="site-footer" id="footer">
+  <div class="container">
+    <div class="newsletter-card reveal">
+      <h2>Subscribe &amp; Get 10% Off Your First Custom Order!</h2>
+      <form class="newsletter-form" data-newsletter>
+        <input type="email" placeholder="Enter your email address" required>
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-about">
+        <a class="logo" href="/"><span class="logo-mark"><%= settings.logo_emoji || '🐾' %></span><%= settings.site_name || 'WhimsiPaw' %></a>
+        <p style="margin-top:1rem"><%= settings.footer_note || '' %></p>
+        <div class="social-row">
+          <a href="#" aria-label="X">𝕏</a><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="TikTok">♪</a>
+        </div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <% categories.forEach(function(c){ %><li><a href="/products?cat=<%= c.slug %>"><%= c.name %></a></li><% }); %>
+          <li><a href="/product/sakura-kimono">Cosplay Costumes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Handmade Studio</h4>
+        <ul>
+          <li><a href="/product/sakura-kimono">Custom Orders</a></li>
+          <li><a href="/page/craft-journal-bags">Craft Journal</a></li>
+          <li><a href="/page/sizing-guide">Sizing Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul><li><a href="#">FAQs</a></li><li><a href="#">Track Order</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Returns</a></li></ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul><li><a href="/page/about">About Us</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Wholesale</a></li><li><a href="#">Affiliate</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 <%= settings.site_name || 'WhimsiPaw' %>. All rights reserved. · <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Shipping</a></span>
+      <div class="pay-row"><span>VISA</span><span>Mastercard</span><span>AMEX</span><span>PayPal</span><span>Klarna</span></div>
+    </div>
+  </div>
+</footer>
+<div class="modal-mask">
+  <div class="modal-card">
+    <button class="modal-close" aria-label="Close">✕</button>
+    <h2>Get 10% Off Your First Order</h2>
+    <p>Join the <%= settings.site_name || 'WhimsiPaw' %> newsletter for early access to limited drops and custom-commission slots.</p>
+    <form class="newsletter-form" data-newsletter>
+      <input type="email" placeholder="Enter your email address" required>
+      <button class="btn btn-primary" type="submit">Unlock 10% Off</button>
+    </form>
+    <p class="modal-note">No spam. Unsubscribe anytime.</p>
+  </div>
+</div>
+<script src="/assets/js/main.js"></script>

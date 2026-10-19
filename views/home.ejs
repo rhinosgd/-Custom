@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= settings.site_name || 'WhimsiPaw' %> | <%= settings.tagline || '' %></title>
+  <meta name="description" content="<%= settings.footer_note || '' %>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23E85D9E'/><text x='50' y='68' font-size='52' text-anchor='middle'>🐾</text></svg>">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+<%- include('partials/header', { settings: settings, categories: categories }) %>
+<main>
+
+<% sections.forEach(function(s){ var d = parseJSON(s.data, {}); %>
+  <% if (s.type === 'hero') { %>
+  <section class="hero">
+    <div class="hero-stage">
+      <% d.slides.forEach(function(sl, i){ %>
+      <div class="hero-slide <%= i===0?'active':'' %>">
+        <div class="media"><video src="<%= sl.video %>" autoplay muted loop playsinline></video></div>
+        <div class="hero-copy container">
+          <span class="kicker"><%= sl.kicker %></span>
+          <h1><%- sl.h1 %></h1>
+          <p><%= sl.p %></p>
+          <div class="cta-row">
+            <% (sl.cta||[]).forEach(function(c){ %><a class="btn <%= c.href.indexOf('/product')===0?'btn-primary':'btn-light' %>" href="<%= c.href %>"><%= c.label %></a><% }); %>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <div class="hero-tabs">
+      <% d.slides.forEach(function(sl, i){ %><button class="hero-tab <%= i===0?'active':'' %>"><%= sl.kicker %></button><% }); %>
+    </div>
+  </section>
+
+  <% } else if (s.type === 'product_grid') { %>
+  <section class="products-section" id="shop">
+    <div class="container">
+      <h2 class="section-title reveal"><%= s.title %></h2>
+      <% if (s.subtitle) { %><p class="section-sub reveal"><%= s.subtitle %></p><% } %>
+      <div class="product-grid">
+        <% products.forEach(function(p){ var imgs = parseJSON(p.images, []); var cat = (categories.find(function(c){return c.id===p.category_id;})||{}).slug || ''; %>
+        <article class="product-card reveal" data-series="<%= cat %>">
+          <div class="thumb"><% if (p.badge) { %><span class="badge badge-<%= p.badge==='sale'?'sale':'new' %>"><%= p.badge==='sale'?'Save '+Math.round((1-p.price/(p.compare_at_price||p.price))*100)+'%':'NEW' %></span><% } %><img loading="lazy" src="<%= imgs[0] || '' %>" alt="<%= p.name %>"></div>
+          <div class="info">
+            <h3><%= p.name %></h3>
+            <p class="tagline"><%= p.subtitle || '' %></p>
+            <div class="price"><span class="now"><%= settings.currency||'$' %><%= p.price.toFixed(2) %></span><% if (p.compare_at_price) { %><span class="was"><%= settings.currency||'$' %><%= p.compare_at_price.toFixed(2) %></span><% } %></div>
+            <a class="btn btn-dark" href="/product/<%= p.slug %>">Buy Now</a>
+          </div>
+        </article>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <% } else if (s.type === 'creators') { %>
+  <section class="creators-section" id="family">
+    <div class="container">
+      <h2 class="section-title reveal"><%= s.title %></h2>
+      <% if (s.subtitle) { %><p class="section-sub reveal"><%= s.subtitle %></p><% } %>
+      <div class="creators-wrap reveal">
+        <button class="car-btn prev" aria-label="Previous">←</button>
+        <div class="creator-track">
+          <% (d.items||[]).forEach(function(it){ %>
+          <figure class="creator-card"><div class="photo"><img loading="lazy" src="<%= it.img %>" alt="<%= it.name %>"></div><figcaption class="meta"><h3><%= it.name %></h3><p><%= it.wearing %></p></figcaption></figure>
+          <% }); %>
+        </div>
+        <button class="car-btn next" aria-label="Next">→</button>
+      </div>
+    </div>
+  </section>
+
+  <% } else if (s.type === 'pain_points') { %>
+  <section class="pain-section" id="why">
+    <div class="container">
+      <h2 class="section-title reveal"><%= s.title %></h2>
+      <div class="pain-layout">
+        <div class="pain-media reveal"><img src="<%= (d.items||[])[0] ? d.items[0].img : '' %>" alt=""></div>
+        <div class="pain-list reveal">
+          <% (d.items||[]).forEach(function(it, i){ %>
+          <div class="pain-item <%= i===0?'active':'' %>" data-img="<%= it.img %>">
+            <button><span class="num"><%= i+1 %></span><%= it.title %></button>
+            <div class="panel"><p><%= it.body %></p></div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <% } else if (s.type === 'milestones') { %>
+  <section class="milestones-section" id="milestones">
+    <div class="container">
+      <h2 class="section-title reveal"><%= s.title %></h2>
+      <div class="milestone-track reveal">
+        <% (d.items||[]).forEach(function(m){ %>
+        <article class="milestone-card"><div class="cover cover-emoji"><span><%= m.emoji %></span></div><div class="body"><span class="date"><%= m.date %></span><h3><%= m.title %></h3></div></article>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <% } else if (s.type === 'reviews') { %>
+  <section class="reviews-section">
+    <div class="container">
+      <h2 class="section-title reveal"><%= s.title %></h2>
+      <div class="review-track reveal">
+        <% (d.items||[]).forEach(function(r){ %>
+        <article class="review-card"><div class="stars"><%= '★'.repeat(r.stars)+'☆'.repeat(5-r.stars) %></div><blockquote>"<%= r.quote %>"</blockquote><div class="who"><span class="avatar"><%= (r.name||'A')[0] %></span><div><b><%= r.name %></b><small><%= r.sub %></small></div></div></article>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <% } else if (s.type === 'blog') { %>
+  <section class="blog-section">
+    <div class="container">
+      <h2 class="section-title reveal"><%= s.title %></h2>
+      <div class="blog-grid">
+        <% blogs.forEach(function(b){ %>
+        <a class="blog-card reveal" href="/page/<%= b.slug %>">
+          <div class="cover"><img loading="lazy" src="<%= b.cover %>" alt=""></div>
+          <div class="body"><span class="cat"><%= b.type %></span><h3><%= b.title %></h3><p><%= b.excerpt %></p></div>
+        </a>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+  <% } %>
+<% }); %>
+
+</main>
+<%- include('partials/footer', { settings: settings, categories: categories }) %>
+</body>
+</html>

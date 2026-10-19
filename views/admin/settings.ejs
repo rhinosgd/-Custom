@@ -1,0 +1,20 @@
+<%- include('partials/chrome-start', { title: '站点设置', admin: admin }) %>
+<form method="post" action="/admin/settings">
+  <div class="card">
+    <div class="row">
+      <div><label>站点名称</label><input name="site_name" value="<%= settings.site_name||'' %>"></div>
+      <div><label>品牌标语</label><input name="tagline" value="<%= settings.tagline||'' %>"></div>
+    </div>
+    <div class="row">
+      <div><label>Logo Emoji</label><input name="logo_emoji" value="<%= settings.logo_emoji||'🐾' %>"></div>
+      <div><label>主色（Hex）</label><input name="primary_color" value="<%= settings.primary_color||'#E85D9E' %>"></div>
+    </div>
+    <div class="row">
+      <div><label>联系邮箱</label><input name="contact_email" value="<%= settings.contact_email||'' %>"></div>
+      <div><label>货币代码</label><input name="currency" value="<%= settings.currency||'USD' %>"></div>
+    </div>
+    <label>页脚简介</label><textarea name="footer_note" style="min-height:80px"><%= settings.footer_note||'' %></textarea>
+  </div>
+  <div style="display:flex;gap:.6rem"><button class="btn p" type="submit">保存设置</button><a class="btn s" href="/admin">返回</a></div>
+</form>
+<%- include('partials/chrome-end') %>

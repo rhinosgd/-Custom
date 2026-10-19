@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop All · <%= settings.site_name %></title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23E85D9E'/><text x='50' y='68' font-size='52' text-anchor='middle'>🐾</text></svg>">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+<%- include('partials/header', { settings: settings, categories: categories }) %>
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <h1><%= activeCat || 'All Products' %></h1>
+      <p><%= activeCat ? 'Hand-picked pieces from the ' + activeCat + ' collection.' : 'Handmade pet apparel, cozy living & made-to-measure cosplay.' %></p>
+    </div>
+  </section>
+  <div class="container">
+    <div class="filter-bar">
+      <a class="chip <%= !cat?'active':'' %>" href="/products">All</a>
+      <% categories.forEach(function(c){ %><a class="chip <%= cat===c.slug?'active':'' %>" href="/products?cat=<%= c.slug %>"><%= c.name %></a><% }); %>
+    </div>
+    <div class="listing-grid">
+      <% products.forEach(function(p){ var imgs = parseJSON(p.images, []); %>
+      <article class="product-card reveal">
+        <div class="thumb"><% if (p.badge) { %><span class="badge badge-<%= p.badge==='sale'?'sale':'new' %>"><%= p.badge==='sale'?'Save '+Math.round((1-p.price/(p.compare_at_price||p.price))*100)+'%':'NEW' %></span><% } %><img loading="lazy" src="<%= (imgs[0]||'') %>" alt="<%= p.name %>"></div>
+        <div class="info">
+          <h3><%= p.name %></h3>
+          <p class="tagline"><%= p.subtitle || '' %></p>
+          <div class="price"><span class="now"><%= settings.currency||'$' %><%= (p.price||0).toFixed(2) %></span><% if (p.compare_at_price) { %><span class="was"><%= settings.currency||'$' %><%= (p.compare_at_price||0).toFixed(2) %></span><% } %></div>
+          <a class="btn btn-dark" href="/product/<%= p.slug %>">View</a>
+        </div>
+      </article>
+      <% }); %>
+    </div>
+  </div>
+</main>
+<%- include('partials/footer', { settings: settings, categories: categories }) %>
+</body>
+</html>

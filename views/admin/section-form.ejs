@@ -1,0 +1,17 @@
+<%- include('partials/chrome-start', { title: '编辑区块：'+s.section_key, admin: admin }) %>
+<form method="post" action="/admin/sections/<%= s.section_key %>">
+  <div class="card">
+    <div class="row">
+      <div><label>标题</label><input name="title" value="<%= s.title %>" required></div>
+      <div><label>副标题</label><input name="subtitle" value="<%= s.subtitle||'' %>"></div>
+    </div>
+    <div style="margin-top:1rem"><label>状态</label>
+      <select name="status"><option value="active" <%= s.status=='active'?'selected':'' %>>active</option><option value="hidden" <%= s.status!='active'?'selected':'' %>>hidden</option></select>
+    </div>
+    <label>内容数据（JSON，可自由增删字段）</label>
+    <textarea name="data" style="font-family:monospace;font-size:.82rem;min-height:300px"><%= JSON.stringify(s.data, null, 2) %></textarea>
+    <p class="muted">提示：hero 的 <code>slides[].video</code> 填视频路径（如 /assets/media/banner-pet-1.mp4）；图片字段填 /assets/media/xxx.jpg。保存后前台立即生效。</p>
+  </div>
+  <div style="display:flex;gap:.6rem"><button class="btn p" type="submit">保存</button><a class="btn s" href="/admin/sections">取消</a></div>
+</form>
+<%- include('partials/chrome-end') %>

@@ -1,0 +1,29 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/"><span class="logo-mark"><%= settings.logo_emoji || '🐾' %></span><%= settings.site_name || 'WhimsiPaw' %></a>
+    <nav class="main-nav">
+      <ul>
+        <% categories.forEach(function(c){ %>
+        <li class="nav-item">
+          <a class="nav-link" href="/products?cat=<%= c.slug %>"><%= c.name %> <span class="caret">▼</span></a>
+        </li>
+        <% }); %>
+        <li class="nav-item">
+          <a class="nav-link" href="/product/sakura-kimono">Handmade Studio <span class="badge badge-new">NEW</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/page/about">Our Story</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#footer">Support</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" aria-label="Search">⌕</button>
+      <button class="icon-btn" aria-label="Account">☺</button>
+      <button class="icon-btn cart-btn" aria-label="Cart">🛒<span class="cart-count" style="display:none">0</span></button>
+      <button class="icon-btn burger" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>

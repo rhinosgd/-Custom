@@ -1,0 +1,8 @@
+# 依赖（目标设备用 npm install 重新安装）
+node_modules/
+
+# 运行时自动生成
+data/
+*.log
+.DS_Store
+.env

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= p.name %> · <%= settings.site_name %></title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23E85D9E'/><text x='50' y='68' font-size='52' text-anchor='middle'>🐾</text></svg>">
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+<%- include('partials/header', { settings: settings, categories: categories }) %>
+<main>
+  <section class="pdp-top">
+    <div class="container">
+      <div class="pdp-layout">
+        <div class="pdp-gallery">
+          <div class="main-shot"><img id="pdpMain" src="<%= p.images[0] || '' %>" alt="<%= p.name %>"></div>
+          <div class="gallery-thumbs">
+            <% p.images.forEach(function(im, i){ %><button class="<%= i===0?'active':'' %>" data-full="<%= im %>"><img src="<%= im %>" alt=""></button><% }); %>
+          </div>
+        </div>
+        <div class="pdp-info">
+          <span class="series"><%= (category&&category.name)||'WhimsiPaw' %></span>
+          <h1><%= p.name %></h1>
+          <p class="tagline"><%= p.subtitle || '' %></p>
+          <div class="rating"><span class="stars">★★★★★</span> <span>Handmade to order</span></div>
+          <div class="price pdp-price"><span class="now"><%= settings.currency||'$' %><%= (p.price||0).toFixed(2) %></span><% if (p.compare_at_price) { %><span class="was"><%= settings.currency||'$' %><%= (p.compare_at_price||0).toFixed(2) %></span><% } %></div>
+
+          <% p.options.forEach(function(opt){ %>
+          <div class="opt-group">
+            <div class="opt-label"><span><%= opt.name %></span></div>
+            <div class="opt-row">
+              <% if (opt.name.toLowerCase()==='color') { %>
+                <% opt.values.forEach(function(v){ %><button class="swatch" title="<%= v %>" style="background:<%= v.toLowerCase().replace(' ','') %>"></button><% }); %>
+              <% } else { %>
+                <% opt.values.forEach(function(v, i){ %><button class="opt-pill <%= i===0?'active':'' %>"><%= v %></button><% }); %>
+              <% } %>
+            </div>
+          </div>
+          <% }); %>
+
+          <div class="pdp-buy">
+            <div class="qty"><button data-step="-1">−</button><input id="qty" value="1" readonly><button data-step="1">+</button></div>
+            <button class="btn btn-primary" id="addCart">Add to Cart</button>
+            <button class="btn btn-outline" data-inquire>Custom / Inquiry</button>
+          </div>
+          <% if (p.custom_note) { %><ul class="pdp-perks"><li><%= p.custom_note %></li><li>Free worldwide shipping over $75 · 30-day returns</li></ul><% } %>
+        </div>
+      </div>
+
+      <% if (p.description) { %><div class="feature-band"><div class="container"><div class="feature-split"><div class="shot"><img src="<%= p.images[0] || '' %>" alt=""></div><div><h2>About this piece</h2><p class="lead"><%= p.description %></p></div></div></div></div><% } %>
+
+      <% if (related.length) { %><div class="feature-band alt"><div class="container"><h2 class="section-title">You may also like</h2><div class="product-grid" style="margin-top:2rem">
+        <% related.forEach(function(r){ %><article class="product-card"><div class="thumb"><img loading="lazy" src="<%= (r.images[0]||'') %>" alt="<%= r.name %>"></div><div class="info"><h3><%= r.name %></h3><div class="price"><span class="now"><%= settings.currency||'$' %><%= (r.price||0).toFixed(2) %></span></div><a class="btn btn-dark" href="/product/<%= r.slug %>">View</a></div></article><% }); %>
+      </div></div></div><% } %>
+    </div>
+  </section>
+</main>
+<%- include('partials/footer', { settings: settings, categories: categories }) %>
+<script>
+document.querySelectorAll('.gallery-thumbs button').forEach(b=>b.addEventListener('click',()=>{document.getElementById('pdpMain').src=b.dataset.full;document.querySelectorAll('.gallery-thumbs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+document.querySelectorAll('.opt-pill').forEach(b=>b.addEventListener('click',()=>{b.parentElement.querySelectorAll('.opt-pill').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+document.querySelectorAll('.qty button').forEach(b=>b.addEventListener('click',()=>{var q=document.getElementById('qty');q.value=Math.max(1,(+q.value)+(+b.dataset.step));}));
+</script>
+</body>
+</html>

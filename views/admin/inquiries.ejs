@@ -1,0 +1,27 @@
+<%- include('partials/chrome-start', { title: '询价 / 留资', admin: admin }) %>
+<div class="card" style="padding:0;overflow:auto">
+<table>
+  <thead><tr><th>时间</th><th>姓名</th><th>邮箱</th><th>电话</th><th>商品</th><th>留言</th><th>状态</th><th>操作</th></tr></thead>
+  <tbody>
+  <% inquiries.forEach(function(i){ %>
+    <tr>
+      <td class="muted"><%= i.created_at %></td>
+      <td><b><%= i.name||'—' %></b></td><td><%= i.email||'—' %></td><td><%= i.phone||'—' %></td>
+      <td><%= i.product_name||'—' %></td><td class="muted" style="max-width:240px"><%= i.message||'' %></td>
+      <td><span class="pill <%= i.status %>"><%= i.status %></span></td>
+      <td>
+        <form method="post" action="/admin/inquiries/<%= i.id %>/status" style="display:flex;gap:.3rem">
+          <select name="status" style="width:auto;padding:.3rem .5rem">
+            <option value="new" <%= i.status=='new'?'selected':'' %>>new</option>
+            <option value="contacted" <%= i.status=='contacted'?'selected':'' %>>contacted</option>
+            <option value="done" <%= i.status=='done'?'selected':'' %>>done</option>
+          </select>
+          <button class="btn sm" type="submit">✔</button>
+        </form>
+      </td>
+    </tr>
+  <% }); %>
+  </tbody>
+</table>
+</div>
+<%- include('partials/chrome-end') %>
